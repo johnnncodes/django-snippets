@@ -16,6 +16,7 @@
         <a href="{% url 'logout' %}">Logout</a>
         <a href="{% url 'snippets' %}">Snippets</a>
         <a href="{% url 'snippet_create' user.profile.slug %}">Create Snippet</a>
+        <a href="{% url 'user_snippets' user.profile.slug %}">My Snippets</a>
     {% endif %}
 
     {% block content_inner %}

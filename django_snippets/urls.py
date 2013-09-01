@@ -9,7 +9,8 @@ from snippets.views import (
     SnippetDetailsView,
     CreateSnippetView,
     SnippetDeleteView,
-    SnippetUpdateView
+    SnippetUpdateView,
+    MySnippetsView
 )
 from app.views import (
     HomeView
@@ -64,7 +65,11 @@ urlpatterns = patterns('',
         SnippetUpdateView.as_view(),
         name='snippet_update'
     ),           
-
+    url(
+        r'^(?P<slug>[-\w]+)/snippets/$', 
+        MySnippetsView.as_view(),
+        name='user_snippets'
+    ), 
     # url(r'^django_snippets/', include('django_snippets.foo.urls')),
 
     # Uncomment the admin/doc line below to enable admin documentation:

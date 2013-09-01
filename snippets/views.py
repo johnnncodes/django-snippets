@@ -54,6 +54,16 @@ class SnippetUpdateView(LoginRequiredMixin, UpdateView):
     form_class = CreateSnippetForm
 
 
+class MySnippetsView(LoginRequiredMixin, ListView):
+
+    model = Snippet
+    context_object_name = 'snippets'
+    template_name = 'snippets/my_snippets.html'
+
+    def get_queryset(self):
+        return self.model.objects.filter(author=self.request.user)
+
+
 
 
 

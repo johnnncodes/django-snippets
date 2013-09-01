@@ -9,7 +9,7 @@ class Snippet(models.Model):
 
     title = models.CharField(max_length=200)
     body = models.TextField()
-    author = models.ForeignKey(User)
+    author = models.ForeignKey(User, related_name='snippets')
     slug = AutoSlugField(
         populate_from='title', 
         unique=True,
