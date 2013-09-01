@@ -1,4 +1,6 @@
+from django.shortcuts import redirect
 from django.core.urlresolvers import reverse, reverse_lazy
+from django.contrib import messages
 from django.views.generic import (
     ListView,
     DetailView,
@@ -6,7 +8,8 @@ from django.views.generic import (
     DeleteView,
     UpdateView
 )
-    
+from django.utils.translation import ugettext as _
+
 from braces.views import LoginRequiredMixin
 
 from snippets.models import Snippet
@@ -45,6 +48,15 @@ class SnippetDeleteView(LoginRequiredMixin, DeleteView):
     model = Snippet
     success_url = reverse_lazy('snippets')
 
+    NOT_SNIPPET_OWNER = _("Sorry you can't delete that snippet because you are not the snippet author.")
+
+    def dispatch(self, request, *args, **kwargs):
+        snippet = self.get_object()
+        if request.user !=  snippet.author:
+            messages.error(self.request, SnippetDeleteView.NOT_SNIPPET_OWNER)
+            return redirect('user_snippets', request.user.profile.slug)
+
+        return super(SnippetDeleteView, self).dispatch(request, *args, **kwargs)
 
 class SnippetUpdateView(LoginRequiredMixin, UpdateView):
 

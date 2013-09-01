@@ -10,10 +10,13 @@
             {{ snippet.title }}
           </a>
 
-          <form method="POST" action="{% url 'snippet_delete' snippet.slug %}"> 
-            {% csrf_token %}
-            <input type="submit" value="delete">
-          </form>
+          {% if snippet.author == user %}
+            <form method="POST" action="{% url 'snippet_delete' snippet.slug %}"> 
+              {% csrf_token %}
+              <input type="submit" value="delete">
+            </form>
+          {% endif %}
+          
         </li>
       {% endfor %}
     </ul>
