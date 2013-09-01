@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" tyle="text/css" href="{{ STATIC_URL }}styles.css">
+</head>
+<body>
+    {% block messages %}
+        {% if messages %}
+            {% for message in messages %}
+                <p>{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+    {% endblock messages %}
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'logout' %}">Logout</a>
+        <a href="{% url 'snippets' %}">Snippets</a>
+        <a href="{% url 'snippet_create' user.profile.slug %}">Create Snippet</a>
+    {% endif %}
+
+    {% block content_inner %}
+    {% endblock content_inner%}
+</body>
+</html>

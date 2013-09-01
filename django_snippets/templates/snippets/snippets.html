@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content_inner %}
+  <h3>Snippets</h3>
+  <ul>
+    {% for snippet in snippets %}
+      <li>
+        <a href="{% url 'snippet_details' snippet.slug %}">
+          {{ snippet.title }}
+        </a>
+
+        <form method="POST" action="{% url 'snippet_delete' snippet.slug %}"> 
+          {% csrf_token %}
+          <input type="submit" value="delete">
+        </form>
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock content_inner %}

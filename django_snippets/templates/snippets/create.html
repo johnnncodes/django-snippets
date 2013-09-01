@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content_inner %}
+  <h3>Create Snippet</h3>
+  <form method="POST" action="{% url 'snippet_create' user.profile.slug %}">
+    {% csrf_token %}
+    {{ form.errors }}
+    {{ form.non_field_errors }}
+    {{ form.as_p }}
+    <input type="submit" value="create">
+  </form>
+{% endblock content_inner %}
