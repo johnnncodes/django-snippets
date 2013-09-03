@@ -1,9 +1,12 @@
 {% extends "base.html" %}
 
+{% load pagination_tags %}
+
 {% block content_inner %}
   <h3>Snippets</h3>
   {% if snippets %}
     <ul>
+      {% autopaginate snippets 2 %}
       {% for snippet in snippets %}
         <li>
           <a href="{% url 'snippet_details' snippet.slug %}">
@@ -20,6 +23,7 @@
         </li>
       {% endfor %}
     </ul>
+    {% paginate %}
   {% else %}
     <p>There are no snippets yet.</p>
   {% endif %}

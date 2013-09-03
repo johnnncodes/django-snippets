@@ -3,3 +3,4 @@ South==0.8.2
 django-autoslug==1.6.1
 django-braces==1.2.2
 django-model-utils==1.5.0
+django-pagination==1.0.7
