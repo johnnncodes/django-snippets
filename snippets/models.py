@@ -12,9 +12,7 @@ class Snippet(models.Model):
     author = models.ForeignKey(User, related_name='snippets')
     slug = AutoSlugField(
         populate_from='title', 
-        unique=True,
-        null=True,
-        blank=True
+        unique=True
     )
 
     def get_absolute_url(self):
