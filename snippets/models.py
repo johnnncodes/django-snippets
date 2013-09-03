@@ -3,9 +3,10 @@ from django.db import models
 from django.contrib.auth.models import User
 
 from autoslug import AutoSlugField
+from model_utils.models import TimeStampedModel
 
 
-class Snippet(models.Model):
+class Snippet(TimeStampedModel):
 
     title = models.CharField(max_length=200)
     body = models.TextField()
