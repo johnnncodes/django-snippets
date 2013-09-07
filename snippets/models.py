@@ -15,6 +15,7 @@ class Snippet(TimeStampedModel):
         populate_from='title', 
         unique=True
     )
+    approved = models.BooleanField(default=False)
 
     def get_absolute_url(self):
         return reverse('snippet_details', args=(self.slug,))

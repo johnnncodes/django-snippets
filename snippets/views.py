@@ -23,7 +23,7 @@ class SnippetsView(LoginRequiredMixin, ListView):
     context_object_name = 'snippets'
 
     def get_queryset(self):
-        return self.model.objects.order_by('-created')
+        return self.model.objects.filter(approved=True).order_by('-created')
 
 
 class SnippetDetailsView(LoginRequiredMixin, DetailView):
