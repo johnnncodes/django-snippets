@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" tyle="text/css" href="{{ STATIC_URL }}styles.css">
+    <link rel="stylesheet" tyle="text/css" href="{{ STATIC_URL }}css/bootstrap.min.css">
+    <link rel="stylesheet" tyle="text/css" href="{{ STATIC_URL }}css/styles.css">
 </head>
 <body>
     {% block messages %}
@@ -21,5 +22,8 @@
 
     {% block content_inner %}
     {% endblock content_inner%}
+
+    <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
+
 </body>
 </html>
