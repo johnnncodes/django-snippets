@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block content_inner %}
-  <a href="{% url 'snippet_update' snippet.slug %}">
-      Update Snippet
-  </a>
-
   <h3>Snippet details!</h3>
   <p>title: {{ snippet.title }}</p>
   <p>body: {{ snippet.body }}</p>
   <p>author: {{ snippet.author }}</p>
   <p>slug: {{ snippet.slug }}</p>
+
+  <a href="{% url 'snippet_update' snippet.slug %}" class="btn btn-info">
+    Edit Snippet
+  </a>
 {% endblock content_inner %}
