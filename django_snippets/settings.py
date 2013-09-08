@@ -132,6 +132,7 @@ INSTALLED_APPS = (
     'snippets',
     'pagination',
     'crispy_forms',
+    'taggit',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

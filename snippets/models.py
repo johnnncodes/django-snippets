@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 from autoslug import AutoSlugField
 from model_utils.models import TimeStampedModel
+from taggit.managers import TaggableManager
 
 
 class Snippet(TimeStampedModel):
@@ -16,6 +17,7 @@ class Snippet(TimeStampedModel):
         unique=True
     )
     approved = models.BooleanField(default=False)
+    tags = TaggableManager()
 
     def get_absolute_url(self):
         return reverse('snippet_details', args=(self.slug,))
