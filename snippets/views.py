@@ -13,7 +13,10 @@ from django.utils.translation import ugettext as _
 from braces.views import LoginRequiredMixin
 
 from snippets.models import Snippet
-from snippets.forms import CreateSnippetForm
+from snippets.forms import (
+    CreateSnippetForm,
+    UpdateSnippetForm
+)
 
 
 class SnippetsView(LoginRequiredMixin, ListView):
@@ -66,7 +69,7 @@ class SnippetUpdateView(LoginRequiredMixin, UpdateView):
     model = Snippet 
     template_name = 'snippets/update.html'
     context_object_name = 'snippet'
-    form_class = CreateSnippetForm
+    form_class = UpdateSnippetForm
 
 
 class MySnippetsView(LoginRequiredMixin, ListView):

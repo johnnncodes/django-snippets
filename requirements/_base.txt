@@ -5,3 +5,4 @@ django-braces==1.2.2
 django-model-utils==1.5.0
 django-pagination==1.0.7
 caffeinated-hound==0.1.0
+django-crispy-forms==1.2.3

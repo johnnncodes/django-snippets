@@ -5,18 +5,17 @@ from django.contrib.auth import (
     login,
     logout
 )
-from django.contrib.auth.forms import (
-    AuthenticationForm
-)
 from django.utils.translation import ugettext as _
 from django.views.generic.edit import (
     BaseFormView
 )
 
+from accounts.forms import LoginForm
+
 
 class LoginView(BaseFormView):
 
-    form_class = AuthenticationForm
+    form_class = LoginForm
 
     INVALID_CREDENTIALS = _('Invalid username and password')
 

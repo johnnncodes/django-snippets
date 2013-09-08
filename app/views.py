@@ -2,13 +2,14 @@ from django.core.urlresolvers import reverse, reverse_lazy
 from django.shortcuts import redirect
 from django.contrib import messages
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import (
-    UserCreationForm, 
-    AuthenticationForm
-)
 from django.utils.translation import ugettext as _
 from django.views.generic import (
     CreateView
+)
+
+from accounts.forms import (
+    LoginForm,
+    RegistrationForm
 )
 
 
@@ -25,14 +26,14 @@ class HomeView(RedirectAuthenticated, CreateView):
 
     template_name = 'app/home.html'
     model = User
-    form_class = UserCreationForm
+    form_class = RegistrationForm
     success_url = reverse_lazy('home')
 
     REGISTRATION_SUCCESSFUL = _('Successfully registered!')
 
     def get_context_data(self, **kwargs):
         context = super(HomeView, self).get_context_data(**kwargs)
-        context['login_form'] = AuthenticationForm()
+        context['login_form'] = LoginForm()
         return context
 
     def form_valid(self, form):

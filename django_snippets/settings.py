@@ -131,6 +131,7 @@ INSTALLED_APPS = (
     'accounts',
     'snippets',
     'pagination',
+    'crispy_forms',
     # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
@@ -171,3 +172,5 @@ import django.conf.global_settings as DEFAULT_SETTINGS
 TEMPLATE_CONTEXT_PROCESSORS = DEFAULT_SETTINGS.TEMPLATE_CONTEXT_PROCESSORS + (
     "django.core.context_processors.request",
 )
+
+CRISPY_TEMPLATE_PACK = 'bootstrap'
