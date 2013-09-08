@@ -31,6 +31,9 @@ class CreateSnippetForm(forms.ModelForm):
         return self.submit_label
 
     def clean_tags(self):
+        """
+        Check if the tag/tags chosen by a user is available
+        """
         available_tags = Tag.objects.all().values_list('name', flat=True)
         chosen_tags = self.cleaned_data['tags'] 
 
