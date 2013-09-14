@@ -11,7 +11,7 @@ from taggit.models import Tag
 
 class CreateSnippetForm(forms.ModelForm):
 
-    tags = forms.MultipleChoiceField()
+    tags = forms.MultipleChoiceField(required=False)
 
     submit_label = None
 

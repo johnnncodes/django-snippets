@@ -17,7 +17,7 @@ class Snippet(TimeStampedModel):
         unique=True
     )
     approved = models.BooleanField(default=False)
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
 
     def get_absolute_url(self):
         return reverse('snippet_details', args=(self.slug,))
