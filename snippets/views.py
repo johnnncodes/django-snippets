@@ -71,6 +71,10 @@ class SnippetUpdateView(LoginRequiredMixin, UpdateView):
     context_object_name = 'snippet'
     form_class = UpdateSnippetForm
 
+    def get_initial(self):
+        obj = self.get_object()
+        return {'tags': obj.tags.all()}
+
 
 class MySnippetsView(LoginRequiredMixin, ListView):
 
