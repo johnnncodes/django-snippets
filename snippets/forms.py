@@ -3,10 +3,9 @@ from django.utils.translation import ugettext as _
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from taggit.models import Tag
 
 from snippets.models import Snippet
-
-from taggit.models import Tag
 
 
 class CreateSnippetForm(forms.ModelForm):
