@@ -8,9 +8,13 @@ from snippets.models import Snippet
 
 from taggit.models import Tag
 
+
 class CreateSnippetForm(forms.ModelForm):
 
+    tags = forms.MultipleChoiceField()
+
     submit_label = None
+
     DEFAULT_SUBMIT_LABEL = 'Submit'
 
     def __init__(self, *args, **kwargs):
@@ -19,6 +23,9 @@ class CreateSnippetForm(forms.ModelForm):
         self.helper.form_class = 'form-horizontal'
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', self.get_submit_label()))
+
+        self.fields['tags'].choices = Tag.objects.values_list('name', 'name')
+        self.fields['tags'].widget.attrs['data-placeholder'] = 'Choose tags'
 
     class Meta:
         model = Snippet

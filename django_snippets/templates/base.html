@@ -2,6 +2,7 @@
 <html>
 <head>
   <link rel="stylesheet" tyle="text/css" href="{{ STATIC_URL }}css/bootstrap.min.css">
+  <link rel="stylesheet" tyle="text/css" href="{{ STATIC_URL }}vendors/chosen.min.css">
   <link rel="stylesheet" tyle="text/css" href="{{ STATIC_URL }}css/styles.css">
 </head>
 <body>
@@ -50,7 +51,11 @@
     {% endblock content_inner%}
   </div> <!-- /container -->
 
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/1.10.2/jquery.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
-
+  <script type="text/javascript" src="{{ STATIC_URL }}vendors/chosen.jquery.min.js"></script>
+  <script type="text/javascript">
+    $(".selectmultiple").chosen()
+  </script>
 </body>
 </html>
