@@ -3,9 +3,8 @@ from django.utils.translation import ugettext as _
 
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
-from taggit.models import Tag
 
-from snippets.models import Snippet
+from snippets.models import Snippet, ApprovedTag
 
 
 class CreateSnippetForm(forms.ModelForm):
@@ -23,7 +22,7 @@ class CreateSnippetForm(forms.ModelForm):
         self.helper.form_method = 'post'
         self.helper.add_input(Submit('submit', self.get_submit_label()))
 
-        self.fields['tags'].choices = Tag.objects.values_list('name', 'name')
+        self.fields['tags'].choices = ApprovedTag.objects.filter(approved=True).values_list('name', 'name')
         self.fields['tags'].widget.attrs['data-placeholder'] = 'Choose tags'
 
     class Meta:
@@ -40,7 +39,7 @@ class CreateSnippetForm(forms.ModelForm):
         """
         Check if the tag/tags chosen by a user is available
         """
-        available_tags = Tag.objects.all().values_list('name', flat=True)
+        available_tags = ApprovedTag.objects.all().values_list('name', flat=True)
         chosen_tags = self.cleaned_data['tags'] 
 
         for tag in chosen_tags:
