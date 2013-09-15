@@ -1,7 +1,8 @@
 # Django settings for django_snippets project.
 import os
+from os.path import join, abspath, dirname
 
-PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+PROJECT_PATH = abspath(join(dirname(__file__), '..'))
 LOGIN_URL = '/'
 
 DEBUG = True

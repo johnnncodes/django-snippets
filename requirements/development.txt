@@ -1,0 +1,5 @@
+-r _base.txt
+
+django-extensions==1.0.0
+caffeinated-hound==0.1.0
+Werkzeug==0.8.3
