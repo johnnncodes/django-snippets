@@ -15,6 +15,10 @@ from snippets.views import (
 from app.views import (
     HomeView
 )
+from tags.views import (
+    TagsView, 
+    CreateTagView
+)
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
 admin.autodiscover()
@@ -69,6 +73,20 @@ urlpatterns = patterns('',
         r'^(?P<slug>[-\w]+)/snippets/$', 
         MySnippetsView.as_view(),
         name='user_snippets'
+    ), 
+
+    ################################
+    # tags
+    ################################
+    url(
+        r'^tags/$', 
+        TagsView.as_view(),
+        name='tags'
+    ),
+    url(
+        r'^tags/(?P<slug>[-\w]+)/create/$', 
+        CreateTagView.as_view(),
+        name='tag_create'
     ), 
     # url(r'^django_snippets/', include('django_snippets.foo.urls')),
 

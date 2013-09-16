@@ -5,18 +5,8 @@ from django.contrib.auth.models import User
 from autoslug import AutoSlugField
 from model_utils.models import TimeStampedModel
 from taggit.managers import TaggableManager
-from taggit.models import TagBase, GenericTaggedItemBase
 
-
-class ApprovedTag(TagBase):
-
-    approved = models.BooleanField(default=False)
-
-
-class ApprovedThroughModel(GenericTaggedItemBase):
-
-    tag = models.ForeignKey(ApprovedTag, related_name='tagged_items')
-
+from tags.models import ApprovedThroughModel
 
 class Snippet(TimeStampedModel):
 

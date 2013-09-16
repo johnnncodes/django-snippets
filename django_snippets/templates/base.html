@@ -31,6 +31,12 @@
                 <li>
                 <a href="{% url 'user_snippets' user.profile.slug %}">My Snippets</a>
               </li>
+              <li>
+                <a href="{% url 'tags' %}">Tags</a>
+              </li>
+              <li>
+                <a href="{% url 'tag_create' user.profile.slug %}">Create Tag</a>
+              </li>
             </ul>
           {% endif %}
         </div><!--/.nav-collapse -->

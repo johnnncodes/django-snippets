@@ -4,7 +4,9 @@ from django.utils.translation import ugettext as _
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
-from snippets.models import Snippet, ApprovedTag
+from tags.models import ApprovedTag
+
+from .models import Snippet
 
 
 class CreateSnippetForm(forms.ModelForm):
