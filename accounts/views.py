@@ -28,6 +28,6 @@ class LoginView(BaseFormView):
         return redirect('home')
 
     def get_success_url(self):
-        return reverse('snippets');
+        return reverse('snippets')
 
 

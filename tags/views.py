@@ -36,13 +36,16 @@ class CreateTagView(LoginRequiredMixin, CreateView):
     template_name = 'tags/create.html'
     model = ApprovedTag
     form_class = CreateTagForm
-    success_url = reverse_lazy('tags')
+
+    TAG_CREATED = _('Tag successfully submitted and waiting for the approval of the site admin.')
 
     def form_valid(self, form):
         tag = form.save(commit=False)
         tag.author = self.request.user
+        messages.success(self.request, CreateTagView.TAG_CREATED)
         return super(CreateTagView, self).form_valid(form)
 
-
+    def get_success_url(self):
+        return reverse('tag_create', args=(self.request.user.profile.slug,))
 
 
