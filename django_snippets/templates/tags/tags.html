@@ -9,7 +9,9 @@
       {% autopaginate tags 30 %}
       {% for tag in tags %}
         <li>
-          <a href="{{ tag.slug }}" rel="{{ numbers|random }}">{{ tag.name }}</a>
+          <a href="{% url 'tag_snippets' tag.slug %}" rel="{{ numbers|random }}">
+            {{ tag.name }}
+          </a>
         </li>
       {% endfor %}
     </ul>

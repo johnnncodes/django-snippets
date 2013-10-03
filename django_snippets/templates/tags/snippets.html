@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% load pagination_tags %}
+
+{% block content_inner %}
+  <h3>Snippets</h3>
+  {% if snippets %}
+    <ul id="snippets">
+      {% autopaginate snippets 30 %}
+      {% for snippet in snippets %}
+        <li>
+          <a href="{% url 'snippet_details' snippet.slug %}">{{ snippet.title }}</a>
+        </li>
+      {% endfor %}
+    </ul>
+    {% paginate %}
+  {% else %}
+    <p>There are no snippets yet that is tagged with "{{ tag.name }}."</p>
+  {% endif %}
+{% endblock content_inner %}

@@ -54,3 +54,17 @@ class CreateTagView(LoginRequiredMixin, CreateView):
         return reverse('tag_create', args=(self.request.user.profile.slug,))
 
 
+class TagSnippetsView(LoginRequiredMixin, ListView):
+
+    template_name = 'tags/snippets.html'
+    model = Snippet
+    context_object_name = 'snippets'
+
+    def get_context_data(self, **kwargs):
+        context = super(TagSnippetsView, self).get_context_data(**kwargs)
+        context['tag'] = ApprovedTag.objects.get(slug=self.kwargs['slug'])
+        return context
+
+    def get_queryset(self):
+        return Snippet.objects.filter(tags__name=self.kwargs['slug']).distinct()
+

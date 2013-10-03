@@ -17,7 +17,8 @@ from app.views import (
 )
 from tags.views import (
     TagsView, 
-    CreateTagView
+    CreateTagView,
+    TagSnippetsView
 )
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
@@ -87,6 +88,11 @@ urlpatterns = patterns('',
         r'^tags/(?P<slug>[-\w]+)/create/$', 
         CreateTagView.as_view(),
         name='tag_create'
+    ), 
+    url(
+        r'^tags/(?P<slug>[-\w]+)/snippets/$', 
+        TagSnippetsView.as_view(),
+        name='tag_snippets'
     ), 
     # url(r'^django_snippets/', include('django_snippets.foo.urls')),
 
