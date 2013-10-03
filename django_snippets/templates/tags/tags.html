@@ -5,11 +5,11 @@
 {% block content_inner %}
   <h3>Tags</h3>
   {% if tags %}
-    <ul>
-      {% autopaginate tags 2 %}
+    <ul id="tags">
+      {% autopaginate tags 30 %}
       {% for tag in tags %}
         <li>
-          {{ tag.name }}
+          <a href="{{ tag.slug }}" rel="{{ numbers|random }}">{{ tag.name }}</a>
         </li>
       {% endfor %}
     </ul>
@@ -18,3 +18,14 @@
     <p>There are no tags yet.</p>
   {% endif %}
 {% endblock content_inner %}
+
+{% block inline_scripts %}
+  <script>
+    $.fn.tagcloud.defaults = {
+      size: {start: 14, end: 18, unit: 'pt'},
+      color: {start: '#cde', end: '#f52'}
+    };
+
+    $('#tags li a').tagcloud();
+  </script>
+{% endblock inline_scripts %}

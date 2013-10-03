@@ -60,8 +60,13 @@
   <script type="text/javascript" src="{{ STATIC_URL }}js/jquery/1.10.2/jquery.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}js/bootstrap.min.js"></script>
   <script type="text/javascript" src="{{ STATIC_URL }}vendors/chosen.jquery.min.js"></script>
+  <script type="text/javascript" src="{{ STATIC_URL }}js/jquery.tagcloud.js"></script>
   <script type="text/javascript">
     $(".selectmultiple").chosen()
   </script>
+
+  {% block inline_scripts %}
+  {% endblock inline_scripts%}
+
 </body>
 </html>

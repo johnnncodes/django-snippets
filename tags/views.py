@@ -27,6 +27,11 @@ class TagsView(LoginRequiredMixin, ListView):
     model = ApprovedTag
     context_object_name = 'tags'
 
+    def get_context_data(self, **kwargs):
+        context = super(TagsView, self).get_context_data(**kwargs)
+        context['numbers'] = [1,2,3,4,5,6,7,8,9,10]
+        return context
+
     def get_queryset(self):
         return self.model.objects.filter(approved=True)
 
