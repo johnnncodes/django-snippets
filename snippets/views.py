@@ -41,12 +41,14 @@ class CreateSnippetView(LoginRequiredMixin, CreateView):
     template_name = 'snippets/create.html'
     model = Snippet
     form_class = CreateSnippetForm
-    success_url = reverse_lazy('snippets')
 
     def form_valid(self, form):
         snippet = form.save(commit=False)
         snippet.author = self.request.user
         return super(CreateSnippetView, self).form_valid(form)
+
+    def get_success_url(self):
+        return reverse('user_snippets', args=(self.request.user.profile.slug,))
 
 
 class SnippetDeleteView(LoginRequiredMixin, DeleteView):
