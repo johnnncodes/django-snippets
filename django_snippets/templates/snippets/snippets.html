@@ -5,24 +5,32 @@
 {% block content_inner %}
   <h3>Snippets</h3>
   {% if snippets %}
-    <ul>
-      {% autopaginate snippets 2 %}
-      {% for snippet in snippets %}
-        <li>
-          <a href="{% url 'snippet_details' snippet.slug %}">
-            {{ snippet.title }}
-          </a>
-
-          {% if snippet.author == user %}
-            <form method="POST" action="{% url 'snippet_delete' snippet.slug %}"> 
-              {% csrf_token %}
-              <input type="submit" value="delete" class="btn btn-danger">
-            </form>
-          {% endif %}
-
-        </li>
-      {% endfor %}
-    </ul>
+    <table class="table">
+      <tbody>
+        <tr>
+          <th>Title</th>
+          <th>Actions</th>
+        </tr>
+        {% autopaginate snippets 2 %}
+        {% for snippet in snippets %}
+          <tr>
+            <td>
+              <a href="{% url 'snippet_details' snippet.slug %}">
+                {{ snippet.title }}
+              </a>
+            </td>
+            <td>
+              {% if snippet.author == user %}
+                <form method="POST" action="{% url 'snippet_delete' snippet.slug %}"> 
+                  {% csrf_token %}
+                  <input type="submit" value="delete" class="btn btn-danger">
+                </form>
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
     {% paginate %}
   {% else %}
     <p>There are no snippets yet.</p>
