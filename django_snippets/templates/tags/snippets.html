@@ -3,7 +3,7 @@
 {% load pagination_tags %}
 
 {% block content_inner %}
-  <h3>Snippets</h3>
+  <h3>Snippets tagged with "{{ tag.name }}"</h3>
   {% if snippets %}
     <ul id="snippets">
       {% autopaginate snippets 30 %}

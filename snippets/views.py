@@ -35,6 +35,11 @@ class SnippetDetailsView(LoginRequiredMixin, DetailView):
     model = Snippet
     context_object_name = 'snippet'
 
+    def get_context_data(self, **kwargs):
+        context = super(SnippetDetailsView, self).get_context_data(**kwargs)
+        context['snippet'].tags = context['snippet'].get_tags()
+        return context
+
 
 class CreateSnippetView(LoginRequiredMixin, CreateView):
 

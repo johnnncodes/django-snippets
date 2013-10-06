@@ -22,3 +22,6 @@ class Snippet(TimeStampedModel):
 
     def get_absolute_url(self):
         return reverse('snippet_details', args=(self.slug,))
+
+    def get_tags(self, limit=5):
+        return self.tags.all()[:limit]

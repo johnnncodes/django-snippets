@@ -6,6 +6,19 @@
   <p>body: {{ snippet.body }}</p>
   <p>author: {{ snippet.author }}</p>
   <p>slug: {{ snippet.slug }}</p>
+  <p>tags:</p>
+  {% if snippet.tags %}
+    <ul>
+      {% for tag in snippet.tags %}
+        <li>
+          <a href="{% url 'tag_snippets' tag.slug %}">
+            {{ tag }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}   
+
 
   <a href="{% url 'snippet_update' snippet.slug %}" class="btn btn-info">
     Edit Snippet
