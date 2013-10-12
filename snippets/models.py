@@ -8,6 +8,7 @@ from taggit.managers import TaggableManager
 
 from tags.models import ApprovedThroughModel
 
+
 class Snippet(TimeStampedModel):
 
     title = models.CharField(max_length=200)

@@ -6,6 +6,7 @@ from crispy_forms.layout import Submit
 
 from .models import ApprovedTag
 
+
 class CreateTagForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):

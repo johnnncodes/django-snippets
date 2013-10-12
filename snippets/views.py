@@ -71,6 +71,7 @@ class SnippetDeleteView(LoginRequiredMixin, DeleteView):
 
         return super(SnippetDeleteView, self).dispatch(request, *args, **kwargs)
 
+
 class SnippetUpdateView(LoginRequiredMixin, UpdateView):
 
     model = Snippet 
