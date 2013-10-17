@@ -18,6 +18,8 @@ from snippets.forms import (
     UpdateSnippetForm
 )
 
+from .mixins import SnippetOwnerRequiredOnDeleteMixin
+
 
 class SnippetsView(LoginRequiredMixin, ListView):
    
@@ -56,21 +58,11 @@ class CreateSnippetView(LoginRequiredMixin, CreateView):
         return reverse('user_snippets', args=(self.request.user.profile.slug,))
 
 
-class SnippetDeleteView(LoginRequiredMixin, DeleteView):
+class SnippetDeleteView(LoginRequiredMixin, SnippetOwnerRequiredOnDeleteMixin, DeleteView):
 
     model = Snippet
     success_url = reverse_lazy('snippets')
-
-    NOT_SNIPPET_OWNER = _("Sorry you can't delete that snippet because you are not the snippet author.")
-
-    def dispatch(self, request, *args, **kwargs):
-        snippet = self.get_object()
-        if request.user !=  snippet.author:
-            messages.error(self.request, SnippetDeleteView.NOT_SNIPPET_OWNER)
-            return redirect('user_snippets', request.user.profile.slug)
-
-        return super(SnippetDeleteView, self).dispatch(request, *args, **kwargs)
-
+    
 
 class SnippetUpdateView(LoginRequiredMixin, UpdateView):
 
