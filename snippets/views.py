@@ -18,7 +18,10 @@ from snippets.forms import (
     UpdateSnippetForm
 )
 
-from .mixins import SnippetOwnerRequiredOnDeleteMixin
+from .mixins import (
+    SnippetOwnerRequiredOnDeleteMixin,
+    SnippetOwnerRequiredOnUpdateMixin
+)
 
 
 class SnippetsView(LoginRequiredMixin, ListView):
@@ -62,9 +65,9 @@ class SnippetDeleteView(LoginRequiredMixin, SnippetOwnerRequiredOnDeleteMixin, D
 
     model = Snippet
     success_url = reverse_lazy('snippets')
-    
 
-class SnippetUpdateView(LoginRequiredMixin, UpdateView):
+
+class SnippetUpdateView(LoginRequiredMixin, SnippetOwnerRequiredOnUpdateMixin, UpdateView):
 
     model = Snippet 
     template_name = 'snippets/update.html'
