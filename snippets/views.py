@@ -9,6 +9,7 @@ from django.views.generic import (
     UpdateView
 )
 from django.utils.translation import ugettext as _
+from django.http import Http404
 
 from braces.views import LoginRequiredMixin
 
@@ -45,6 +46,14 @@ class SnippetDetailsView(LoginRequiredMixin, DetailView):
         context['snippet'].tags = context['snippet'].get_tags()
         return context
 
+    def get(self, request, *args, **kwargs):
+        # only allow the snippet to be viewed if it is already
+        # approved or the current logged-in user is the author
+        snippet = self.get_object()
+        if snippet.approved or request.user ==  snippet.author:
+            return super(SnippetDetailsView, self).get(request, *args, **kwargs)
+        raise Http404
+        
 
 class CreateSnippetView(LoginRequiredMixin, CreateView):
 
