@@ -8,7 +8,7 @@ class UserProfile(models.Model):
 
     user = models.OneToOneField(User, related_name='profile')
     slug = AutoSlugField(
-        populate_from=lambda instance: instance.user.get_full_name(),
+        populate_from=lambda instance: instance.user.username,
         unique=True
     )
 
