@@ -4,51 +4,25 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
 
-class AppTest(TestCase):
+class HomeViewTest(TestCase):
 
-    def setUp(self):
-        self.client = Client()
-        username = 'username'
-        email = 'email'
-        password = 'password'
-        User.objects.create_user(username, email, password)
-
-    def test_login_logout(self):
-        username = 'username'
-        password = 'password'
-
-        # login using wrong credentials
-        response = self.client.post(reverse('login'), \
-            {'username': username, 'password': 'wrong password'})
-
-        self.assertRedirects(response, reverse('home'))
-
-        # login using correct credentials
-        response = self.client.post(reverse('login'), \
-            {'username': username, 'password': password})
-
-        self.assertRedirects(response, reverse('snippets'))
-
-        # logout
-        response = self.client.get(reverse('logout'))
-        self.assertRedirects(response, reverse('home'))
-
-    def test_register(self):
-        username = 'unregistered_username'
-        password = 'unregistered_password'
-
+    def test_registration(self):
         # valid
         response = self.client.post(reverse('home'), \
-            {'username': username, 'password1': password, 'password2': password})
-       
-        self.assertEqual(response.status_code, 302)
+            {'username': 'john', 'password1': 'admin', 'password2': 'admin'}, \
+            follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn('Successfully registered!', response.content)
 
         # invalid
         response = self.client.post(reverse('home'), \
             {'username': '', 'password1': '', 'password2': ''})
-        
         self.assertEqual(response.status_code, 200)
+        self.assertIn('This field is required.', response.content)
 
-    def test_home_view(self):
+    def test_can_load_home_page_properly(self):
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
+        self.assertIn('<h3>Login</h3>', response.content)
+        self.assertIn('<h3>Register</h3>', response.content)
+

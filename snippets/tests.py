@@ -1,61 +1,58 @@
 from django.test import TestCase, Client
 from django.core.urlresolvers import reverse
+from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-
 from snippets.models import Snippet
 
-class SnippetsTest(TestCase):
+
+class BaseSnippetsTest(TestCase):
+    # 1st user
+    USERNAME = 'john'
+    EMAIL = 'john@gmail.com'
+    PASSWORD = 'admin'
+
+    # 2nd user
+    USERNAME2 = 'francie'
+    EMAIL2 = 'francie@gmail.com'
+    PASSWORD2 = 'admin'
 
     def setUp(self):
-        self.client = Client()
-
         # 1st user
-        username = 'username'
-        email = 'email'
-        password = 'password'
-        self.user = User.objects.create_user(username, email, password)
-
+        self.user = User.objects.create_user(self.USERNAME, self.EMAIL, self.PASSWORD)
         # 2nd user
-        username = 'username2'
-        email = 'email2'
-        password = 'password2'
-        self.user2 = User.objects.create_user(username, email, password)
+        self.user2 = User.objects.create_user(self.USERNAME2, self.EMAIL2, self.PASSWORD2)
 
 
-    def test_snippets_page(self):
-        username = 'username'
-        password = 'password'
+class SnippetsViewTest(BaseSnippetsTest):
 
-        self.client.login(username=username, password=password)
-
+    def test_can_load_snippets_page_properly(self):
+        self.client.login(username=self.USERNAME, password=self.PASSWORD)
         response = self.client.get(reverse('snippets'))
         self.assertEqual(response.status_code, 200)
-
         self.assertIsNotNone(response.context['snippets'])
 
-    def test_create_snippet_view(self):
-        username = 'username'
-        password = 'password'
 
-        self.client.login(username=username, password=password)
+class CreateSnippetViewTest(BaseSnippetsTest):
+
+    def test_create_snippet(self):
+        self.client.login(username=self.USERNAME, password=self.PASSWORD)
 
         # invalid
-        response = self.client.post(reverse('snippet_create', args=(self.user.profile.slug,)), \
-            {'title': '', 'body': ''})
-
+        response = self.client.post(reverse('snippet_create', \
+            args=(self.user.profile.slug,)), {'title': '', 'body': ''})
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, 'This field is required.', count=2)
 
         # valid
         response = self.client.post(reverse('snippet_create', args=(self.user.profile.slug,)), \
-            {'title': 'title', 'body': 'body'})
+            {'title': 'My first snippet', 'body': 'The snippet body'}, follow=True)
+        self.assertRedirects(response, reverse('user_snippets', args=(self.user.profile.slug,)))        
+        self.assertIn('My first snippet', response.content)
 
-        self.assertRedirects(response, reverse('user_snippets', args=(self.user.profile.slug,)))
 
-    def test_delete_snippet_view(self):
-        username = 'username'
-        password = 'password'
+class DeleteSnippetViewTest(BaseSnippetsTest):
 
+    def test_delete_snippet(self):
         snippet = Snippet(title='title', body='body', author=self.user)
         snippet.save()
 
@@ -64,11 +61,14 @@ class SnippetsTest(TestCase):
         self.assertRedirects(response, reverse('home') + '?next=/snippets/title/delete/')
 
         # invalid (logged-in, not snippet owner)
-        self.client.login(username='username2', password='password2')
-        response = self.client.post(reverse('snippet_delete', args=(snippet.slug,)))
+        self.client.login(username=self.USERNAME2, password=self.PASSWORD2)
+        response = self.client.post(reverse('snippet_delete', \
+            args=(snippet.slug,)), follow=True)
         self.assertRedirects(response, reverse('user_snippets', args=(self.user2.profile.slug,)))       
+        self.assertIn("Sorry you can't delete that snippet because you are not the snippet author.", \
+            response.content.replace('&#39;', "'"))
 
         # valid (logged-in, snippet owner)
-        self.client.login(username=username, password=password)
+        self.client.login(username=self.USERNAME, password=self.PASSWORD)
         response = self.client.post(reverse('snippet_delete', args=(snippet.slug,)))
         self.assertRedirects(response, reverse('snippets'))
