@@ -73,7 +73,7 @@ class CreateSnippetViewTest(BaseSnippetsTest):
         self.assertIn('My first snippet', response.content)
 
 
-class SnippetDeleteView(BaseSnippetsTest):
+class SnippetDeleteViewTest(BaseSnippetsTest):
 
     def test_delete_snippet(self):
         snippet = Snippet(title='title', body='body', author=self.user)
@@ -97,7 +97,7 @@ class SnippetDeleteView(BaseSnippetsTest):
         self.assertRedirects(response, reverse('snippets'))
 
 
-class SnippetUpdateView(BaseSnippetsTest):
+class SnippetUpdateViewTest(BaseSnippetsTest):
 
     def test_update_snippet(self):
         snippet = Snippet(title='title', body='body', author=self.user)
