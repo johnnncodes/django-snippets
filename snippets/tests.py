@@ -32,6 +32,29 @@ class SnippetsViewTest(BaseSnippetsTest):
         self.assertIsNotNone(response.context['snippets'])
 
 
+class SnippetDetailsViewTest(BaseSnippetsTest):
+
+    def test_can_load_snippet_detail_page_properly(self):
+        snippet = Snippet(title='title', body='body', author=self.user)
+        snippet.save()
+
+        # invalid (not logged in)
+        response = self.client.get(reverse('snippet_details', args=(snippet.slug,)), follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertRedirects(response, reverse('home') + '?next=/snippets/%s/' % snippet.slug)
+
+        # invalid (logged-in but snippet is not yet approved and user is not the snippet author)
+        self.client.login(username=self.USERNAME2, password=self.PASSWORD2)
+        response = self.client.get(reverse('snippet_details', args=(snippet.slug,)), follow=True)
+        self.assertEqual(response.status_code, 404)
+
+        # valid (if the author is the current logged in user)
+        self.client.login(username=self.USERNAME, password=self.PASSWORD)
+        response = self.client.get(reverse('snippet_details', args=(snippet.slug,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.context['snippet'])
+
+
 class CreateSnippetViewTest(BaseSnippetsTest):
 
     def test_create_snippet(self):
