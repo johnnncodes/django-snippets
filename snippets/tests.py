@@ -50,7 +50,7 @@ class CreateSnippetViewTest(BaseSnippetsTest):
         self.assertIn('My first snippet', response.content)
 
 
-class DeleteSnippetViewTest(BaseSnippetsTest):
+class SnippetDeleteView(BaseSnippetsTest):
 
     def test_delete_snippet(self):
         snippet = Snippet(title='title', body='body', author=self.user)
@@ -72,3 +72,28 @@ class DeleteSnippetViewTest(BaseSnippetsTest):
         self.client.login(username=self.USERNAME, password=self.PASSWORD)
         response = self.client.post(reverse('snippet_delete', args=(snippet.slug,)))
         self.assertRedirects(response, reverse('snippets'))
+
+
+class SnippetUpdateView(BaseSnippetsTest):
+
+    def test_update_snippet(self):
+        snippet = Snippet(title='title', body='body', author=self.user)
+        snippet.save()
+
+        # invalid (not logged-in)
+        response = self.client.post(reverse('snippet_update', args=(snippet.slug,)))
+        self.assertRedirects(response, reverse('home') + '?next=/snippets/title/update/')
+
+        # invalid (logged-in, not snippet owner)
+        self.client.login(username=self.USERNAME2, password=self.PASSWORD2)
+        response = self.client.post(reverse('snippet_update', \
+            args=(snippet.slug,)), follow=True)
+        self.assertRedirects(response, reverse('user_snippets', args=(self.user2.profile.slug,)))       
+        self.assertIn("Sorry you can't update that snippet because you are not the snippet author.", \
+            response.content.replace('&#39;', "'"))
+
+        # valid (logged-in, snippet owner)
+        self.client.login(username=self.USERNAME, password=self.PASSWORD)
+        response = self.client.post(reverse('snippet_update', args=(snippet.slug,)), \
+            {'title': 'new title', 'body': 'new body'})
+        self.assertRedirects(response, reverse('snippet_details', args=(snippet.slug,)))
