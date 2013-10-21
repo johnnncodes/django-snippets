@@ -120,3 +120,13 @@ class SnippetUpdateView(BaseSnippetsTest):
         response = self.client.post(reverse('snippet_update', args=(snippet.slug,)), \
             {'title': 'new title', 'body': 'new body'})
         self.assertRedirects(response, reverse('snippet_details', args=(snippet.slug,)))
+
+
+class MySnippetsViewTest(BaseSnippetsTest):
+
+    def test_can_load_my_snippets_page_properly(self):
+        # logged-in
+        self.client.login(username=self.USERNAME, password=self.PASSWORD)
+        response = self.client.get(reverse('user_snippets', args=(self.user.profile.slug,)))
+        self.assertEqual(response.status_code, 200)
+        self.assertIsNotNone(response.context['snippets'])
