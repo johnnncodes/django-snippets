@@ -1,16 +1,8 @@
-from django.test import TestCase, Client
+from libs.mixins.test import BaseTestCase
 from django.core.urlresolvers import reverse
-from django.contrib.auth.models import User
 
 
-class LoginViewTest(TestCase):
-
-    USERNAME = 'john'
-    EMAIL = 'john@gmail.com'
-    PASSWORD = 'admin'
-
-    def setUp(self):
-        User.objects.create_user(self.USERNAME, self.EMAIL, self.PASSWORD)
+class LoginViewTest(BaseTestCase):
 
     def test_login_logout(self):
         # login using wrong credentials

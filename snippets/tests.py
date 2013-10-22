@@ -1,29 +1,9 @@
-from django.test import TestCase, Client
+from libs.mixins.test import BaseTestCase
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from snippets.models import Snippet
 
 
-class BaseSnippetsTest(TestCase):
-    # 1st user
-    USERNAME = 'john'
-    EMAIL = 'john@gmail.com'
-    PASSWORD = 'admin'
-
-    # 2nd user
-    USERNAME2 = 'francie'
-    EMAIL2 = 'francie@gmail.com'
-    PASSWORD2 = 'admin'
-
-    def setUp(self):
-        # 1st user
-        self.user = User.objects.create_user(self.USERNAME, self.EMAIL, self.PASSWORD)
-        # 2nd user
-        self.user2 = User.objects.create_user(self.USERNAME2, self.EMAIL2, self.PASSWORD2)
-
-
-class SnippetsViewTest(BaseSnippetsTest):
+class SnippetsViewTest(BaseTestCase):
 
     def test_can_load_snippets_page_properly(self):
         self.client.login(username=self.USERNAME, password=self.PASSWORD)
@@ -32,7 +12,7 @@ class SnippetsViewTest(BaseSnippetsTest):
         self.assertIsNotNone(response.context['snippets'])
 
 
-class SnippetDetailsViewTest(BaseSnippetsTest):
+class SnippetDetailsViewTest(BaseTestCase):
 
     def test_can_load_snippet_detail_page_properly(self):
         snippet = Snippet(title='title', body='body', author=self.user)
@@ -55,7 +35,7 @@ class SnippetDetailsViewTest(BaseSnippetsTest):
         self.assertIsNotNone(response.context['snippet'])
 
 
-class CreateSnippetViewTest(BaseSnippetsTest):
+class CreateSnippetViewTest(BaseTestCase):
 
     def test_create_snippet(self):
         self.client.login(username=self.USERNAME, password=self.PASSWORD)
@@ -73,7 +53,7 @@ class CreateSnippetViewTest(BaseSnippetsTest):
         self.assertIn('My first snippet', response.content)
 
 
-class SnippetDeleteViewTest(BaseSnippetsTest):
+class SnippetDeleteViewTest(BaseTestCase):
 
     def test_delete_snippet(self):
         snippet = Snippet(title='title', body='body', author=self.user)
@@ -97,7 +77,7 @@ class SnippetDeleteViewTest(BaseSnippetsTest):
         self.assertRedirects(response, reverse('snippets'))
 
 
-class SnippetUpdateViewTest(BaseSnippetsTest):
+class SnippetUpdateViewTest(BaseTestCase):
 
     def test_update_snippet(self):
         snippet = Snippet(title='title', body='body', author=self.user)
@@ -122,7 +102,7 @@ class SnippetUpdateViewTest(BaseSnippetsTest):
         self.assertRedirects(response, reverse('snippet_details', args=(snippet.slug,)))
 
 
-class MySnippetsViewTest(BaseSnippetsTest):
+class MySnippetsViewTest(BaseTestCase):
 
     def test_can_load_my_snippets_page_properly(self):
         # logged-in

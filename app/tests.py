@@ -1,7 +1,5 @@
-from django.test import TestCase, Client
+from django.test import TestCase
 from django.core.urlresolvers import reverse
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 
 
 class HomeViewTest(TestCase):
