@@ -1,5 +1,6 @@
-from libs.mixins.test import BaseTestCase
 from django.core.urlresolvers import reverse
+
+from libs.mixins.test import BaseTestCase
 from snippets.models import Snippet
 
 

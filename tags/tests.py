@@ -1,7 +1,7 @@
-from libs.mixins.test import BaseTestCase
 from django.core.urlresolvers import reverse
 
 from snippets.models import Snippet
+from libs.mixins.test import BaseTestCase
 from .models import ApprovedTag
 
 
