@@ -6,8 +6,8 @@
   <p>body: {{ snippet.body }}</p>
   <p>author: {{ snippet.author }}</p>
   <p>slug: {{ snippet.slug }}</p>
-  <p>tags:</p>
   {% if snippet.tags %}
+    <p>tags:</p>
     <ul>
       {% for tag in snippet.tags %}
         <li>
