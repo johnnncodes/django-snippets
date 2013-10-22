@@ -6,3 +6,9 @@
   <h3>Create Snippet</h3>
   {% crispy form %}
 {% endblock content_inner %}
+
+{% block inline_scripts %}
+  <script type="text/javascript">
+    $(".selectmultiple").chosen()
+  </script>
+{% endblock inline_scripts%}
