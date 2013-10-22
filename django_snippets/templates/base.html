@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <link rel="stylesheet" tyle="text/css" href="{% static 'css/bootstrap.min.css' %}">
-  <link rel="stylesheet" tyle="text/css" href="{% static 'vendors/chosen.min.css' %}">
+  <link rel="stylesheet" tyle="text/css" href="{% static 'packages/bootstrap/bootstrap.min.css' %}">
+  <link rel="stylesheet" tyle="text/css" href="{% static 'packages/chosen/chosen.min.css' %}">
   <link rel="stylesheet" tyle="text/css" href="{% static 'css/styles.css' %}">
 </head>
 <body>
@@ -61,10 +61,11 @@
     {% endblock content_inner%}
   </div> <!-- /container -->
 
-  <script type="text/javascript" src="{% static 'js/jquery/1.10.2/jquery.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/bootstrap.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'vendors/chosen.jquery.min.js' %}"></script>
-  <script type="text/javascript" src="{% static 'js/jquery.tagcloud.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/vendors/jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'packages/bootstrap/bootstrap.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'packages/chosen/chosen.jquery.min.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/vendors/jquery.tagcloud.js' %}"></script>
+
   <script type="text/javascript">
     $(".selectmultiple").chosen()
   </script>
