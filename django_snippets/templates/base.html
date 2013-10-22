@@ -66,6 +66,10 @@
   <script type="text/javascript" src="{% static 'packages/chosen/chosen.jquery.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'js/vendors/jquery.tagcloud.js' %}"></script>
 
+  <script type="text/javascript">
+    $(".selectmultiple").chosen()
+  </script>
+
   {% block inline_scripts %}
   {% endblock inline_scripts%}
 
